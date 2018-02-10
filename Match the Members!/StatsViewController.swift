@@ -52,7 +52,7 @@ class StatsViewController: UIViewController {
         str.image = UIImage(named: "Streak")
         view.addSubview(str)
         
-        q = UIImageView(frame: CGRect(x: 50, y: 300, width: view.frame.width-100, height: 50))
+        q = UIImageView(frame: CGRect(x: 50, y: 280, width: view.frame.width-100, height: 60))
         q.image = UIImage(named: "Questions")
         view.addSubview(q)
         
