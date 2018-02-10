@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     
     func setupOverlay() {
         overlayView = UIView(frame: view.frame)
-        overlayView.backgroundColor = .blue
+        overlayView.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
         overlayView.alpha = 0.05
         view.addSubview(overlayView)
     }

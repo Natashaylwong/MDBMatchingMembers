@@ -33,8 +33,9 @@ class MatchingViewController: UIViewController {
     
     var score = 0
     var indexButtonAnswer = Int()
-    
+    var streaks = [0]
     var longestStreak = Int()
+    var bestStreak = Int()
     var lastThreeQuestions = [String]()
     var lastThreePeople = [String]()
 
@@ -57,9 +58,10 @@ class MatchingViewController: UIViewController {
     
     func setupScoreView() {
         scoreView = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 70))
-        scoreView.backgroundColor = .blue
+        scoreView.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
         scoreView.alpha = 0.7
-        scoreView.text = "   Score: \(score)"
+        scoreView.font = UIFont.systemFont(ofSize: 30)
+        scoreView.text = "     Score: \(score)"
         scoreView.textColor = .white
         view.addSubview(scoreView)
         setupStatButton()
@@ -67,7 +69,7 @@ class MatchingViewController: UIViewController {
     }
     
     @objc func getImage() {
-        imageForName = UIImageView(frame: CGRect(x: 25, y: 100, width: view.frame.width - 60, height: 350))
+        imageForName = UIImageView(frame: CGRect(x: 25, y: 100, width: view.frame.width - 60, height: 370))
         getName = names[Int(arc4random_uniform(UInt32(names.count)))]
         answerName = getName.lowercased()
         answerName = answerName.replacingOccurrences(of: " ", with: "")
@@ -79,17 +81,17 @@ class MatchingViewController: UIViewController {
     func setupButtons() {
         enableButtons()
         indexButtonAnswer = Int(arc4random_uniform(UInt32(4))) + 1
-        stopButton = UIButton(frame: CGRect(x: 30, y:700, width: view.frame.width-60, height: 20))
+        stopButton = UIButton(frame: CGRect(x: 30, y:700, width: view.frame.width-60, height: 25))
         stopButton.setTitle("Stop", for: .normal)
         stopButton.setTitleColor(.black, for: .normal)
-        stopButton.backgroundColor = .yellow
+        stopButton.backgroundColor = UIColor(hue: 0.1667, saturation: 0.35, brightness: 0.97, alpha: 1.0)
         stopButton.addTarget(self, action: #selector(stopAction), for: .touchUpInside)
         view.addSubview(stopButton)
         if indexButtonAnswer == 1 {
             button1 = UIButton(frame: CGRect(x: 30, y:500, width: view.frame.width-60, height: 40))
             button1.setTitle(getName, for: .normal)
             button1.setTitleColor(.white, for: .normal)
-            button1.backgroundColor = .blue
+            button1.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button1.addTarget(self, action: #selector(correctButtonTapped), for: .touchUpInside)
             view.addSubview(button1)
             
@@ -97,7 +99,7 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button2.setTitle(randomName, for: .normal)
             button2.setTitleColor(.white, for: .normal)
-            button2.backgroundColor = .blue
+            button2.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button2.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button2)
             
@@ -105,7 +107,7 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button3.setTitle(randomName, for: .normal)
             button3.setTitleColor(.white, for: .normal)
-            button3.backgroundColor = .blue
+            button3.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button3.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button3)
             
@@ -113,7 +115,7 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button4.setTitle(randomName, for: .normal)
             button4.setTitleColor(.white, for: .normal)
-            button4.backgroundColor = .blue
+            button4.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button4.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button4)
             
@@ -122,14 +124,14 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button1.setTitle(randomName, for: .normal)
             button1.setTitleColor(.white, for: .normal)
-            button1.backgroundColor = .blue
+            button1.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button1.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button1)
             
             button2 = UIButton(frame: CGRect(x: 30, y:550, width: view.frame.width-60, height: 40))
             button2.setTitle(getName, for: .normal)
             button2.setTitleColor(.white, for: .normal)
-            button2.backgroundColor = .blue
+            button2.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button2.addTarget(self, action: #selector(correctButtonTapped), for: .touchUpInside)
             view.addSubview(button2)
             
@@ -137,7 +139,7 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button3.setTitle(randomName, for: .normal)
             button3.setTitleColor(.white, for: .normal)
-            button3.backgroundColor = .blue
+            button3.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button3.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button3)
             
@@ -145,7 +147,7 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button4.setTitle(randomName, for: .normal)
             button4.setTitleColor(.white, for: .normal)
-            button4.backgroundColor = .blue
+            button4.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button4.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button4)
         } else if indexButtonAnswer == 3 {
@@ -153,7 +155,7 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button1.setTitle(randomName, for: .normal)
             button1.setTitleColor(.white, for: .normal)
-            button1.backgroundColor = .blue
+            button1.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button1.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button1)
             
@@ -161,14 +163,14 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button2.setTitle(randomName, for: .normal)
             button2.setTitleColor(.white, for: .normal)
-            button2.backgroundColor = .blue
+            button2.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button2.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button2)
             
             button3 = UIButton(frame: CGRect(x: 30, y:600, width: view.frame.width-60, height: 40))
             button3.setTitle(getName, for: .normal)
             button3.setTitleColor(.white, for: .normal)
-            button3.backgroundColor = .blue
+            button3.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button3.addTarget(self, action: #selector(correctButtonTapped), for: .touchUpInside)
             view.addSubview(button3)
             
@@ -176,7 +178,7 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button4.setTitle(randomName, for: .normal)
             button4.setTitleColor(.white, for: .normal)
-            button4.backgroundColor = .blue
+            button4.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button4.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button4)
         } else {
@@ -184,7 +186,7 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button1.setTitle(randomName, for: .normal)
             button1.setTitleColor(.white, for: .normal)
-            button1.backgroundColor = .blue
+            button1.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button1.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button1)
             
@@ -192,7 +194,7 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button2.setTitle(randomName, for: .normal)
             button2.setTitleColor(.white, for: .normal)
-            button2.backgroundColor = .blue
+            button2.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button2.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button2)
             
@@ -200,14 +202,14 @@ class MatchingViewController: UIViewController {
             randomName = randomNameGenerator()
             button3.setTitle(randomName, for: .normal)
             button3.setTitleColor(.white, for: .normal)
-            button3.backgroundColor = .blue
+            button3.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button3.addTarget(self, action: #selector(incorrectButtonTapped), for: .touchUpInside)
             view.addSubview(button3)
             
             button4 = UIButton(frame: CGRect(x: 30, y:650, width: view.frame.width-60, height: 40))
             button4.setTitle(getName, for: .normal)
             button4.setTitleColor(.white, for: .normal)
-            button4.backgroundColor = .blue
+            button4.backgroundColor = UIColor(hue: 0.5583, saturation: 0.61, brightness: 0.96, alpha: 1.0)
             button4.addTarget(self, action: #selector(correctButtonTapped), for: .touchUpInside)
             view.addSubview(button4)
         }
@@ -224,6 +226,8 @@ class MatchingViewController: UIViewController {
     @objc func correctButtonTapped(sender: UIButton) {
         score+=1
         longestStreak+=1
+        streaks.append(longestStreak)
+        bestStreak = streaks.max()!
         disableButtons()
         lastThreeQuestions.append("Correct")
         lastThreePeople.append(getName)
@@ -241,6 +245,8 @@ class MatchingViewController: UIViewController {
         disableButtons()
         lastThreeQuestions.append("Incorrect")
         lastThreePeople.append(getName)
+        streaks.append(longestStreak)
+        bestStreak = streaks.max()!
         longestStreak=0
         UIView.animate(withDuration: 1) {
             sender.backgroundColor = .red
@@ -286,6 +292,7 @@ class MatchingViewController: UIViewController {
                 self.button4.backgroundColor = .red
                 self.lastThreePeople.append(self.getName)
                 self.lastThreeQuestions.append("Incorrect")
+                self.longestStreak = 0
             }
             resetTimer()
             runTimer()
@@ -295,20 +302,13 @@ class MatchingViewController: UIViewController {
         } else {
             self.seconds-=1
             print(seconds)
-            }
         }
+    }
     
     func setupStatButton() {
-        statButton = UIButton(frame: CGRect(x: 340, y: 10, width: 30, height: 40))
+        statButton = UIButton(frame: CGRect(x: 340, y: 12, width: 30, height: 40))
         statButton.setImage(UIImage(named: "statsIcon"), for: .normal)
-       // if resumeTapped == false {
-        //    timer.invalidate()
-         //   resumeTapped = true
-            statButton.addTarget(self, action: #selector(statButtonTapped), for: .touchUpInside)
-       // } else {
-        //    runTimer()
-         //   resumeTapped = false
-       // }
+        statButton.addTarget(self, action: #selector(statButtonTapped), for: .touchUpInside)
         view.addSubview(statButton)
     }
 
@@ -316,9 +316,6 @@ class MatchingViewController: UIViewController {
         timer.invalidate()
         performSegue(withIdentifier: "toStats", sender: self)
     }
-    
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -329,10 +326,9 @@ class MatchingViewController: UIViewController {
             let answer = segue.destination as! StatsViewController
             answer.lastAnswers = lastThreeQuestions
             answer.lastPeople = lastThreePeople
+            answer.longestStreak = bestStreak
         }
     }
-    
-
     /*
     // MARK: - Navigation
 
