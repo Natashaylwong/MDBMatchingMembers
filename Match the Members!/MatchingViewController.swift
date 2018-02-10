@@ -37,7 +37,7 @@ class MatchingViewController: UIViewController {
     var longestStreak = Int()
     var lastThreeQuestions = [String]()
     var lastThreePeople = [String]()
-    
+
     
     
     var correctAnswer = String()
@@ -223,8 +223,10 @@ class MatchingViewController: UIViewController {
     }
     @objc func correctButtonTapped(sender: UIButton) {
         score+=1
-        
+        longestStreak+=1
         disableButtons()
+        lastThreeQuestions.append("Correct")
+        lastThreePeople.append(getName)
         scoreView.text = "   Score: \(score)"
         UIView.animate(withDuration: 1) {
             sender.backgroundColor = .green
@@ -237,6 +239,9 @@ class MatchingViewController: UIViewController {
     
     @objc func incorrectButtonTapped(sender: UIButton) {
         disableButtons()
+        lastThreeQuestions.append("Incorrect")
+        lastThreePeople.append(getName)
+        longestStreak=0
         UIView.animate(withDuration: 1) {
             sender.backgroundColor = .red
         }
@@ -279,6 +284,8 @@ class MatchingViewController: UIViewController {
                 self.button2.backgroundColor = .red
                 self.button3.backgroundColor = .red
                 self.button4.backgroundColor = .red
+                self.lastThreePeople.append(self.getName)
+                self.lastThreeQuestions.append("Incorrect")
             }
             resetTimer()
             runTimer()
@@ -316,11 +323,12 @@ class MatchingViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(toStats) {
-            let something = segue.destination as! StatsViewController
-            something._____ = ____
+        if segue.identifier == "toStats" {
+            let answer = segue.destination as! StatsViewController
+            answer.lastAnswers = lastThreeQuestions
+            answer.lastPeople = lastThreePeople
         }
     }
     
